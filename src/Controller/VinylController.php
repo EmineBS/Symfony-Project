@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\VinylMixRepository;
+use App\Entity\VinylMix;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,11 +12,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VinylController extends AbstractController
 {
-
-    public function __construct(
-        private bool $isDebug
-    ){}
-
     #[Route('/', name: 'app_homepage')]
     function homepage(): Response
     {
@@ -38,7 +33,8 @@ class VinylController extends AbstractController
     {
         $mixRepository = $entityManager->getRepository(VinylMix::class);
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
-        $mixes = $mixRepository->findBy([], ['votes' => 'DESC']);
+        $mixes = $mixRepository->findAllOrderedByVotes();
+        //$mixes = $mixRepository->findBy([], ['votes' => 'DESC']);
         //$mixes = $mixRepository->findAll();
         //dd($mixes);
         return $this->render('vinyl/browse.html.twig', [

@@ -14,11 +14,13 @@ class MixController extends AbstractController
     #[Route('/mix/new')]
     public function new(EntityManagerInterface $entityManager): Response
     {
-        
+        $genres = ['pop', 'rock'];
+
         $mix = new VinylMix();
         $mix->setTitle('Do you Remember... Phil Collins?!');
         $mix->setDiscription('A pure mix of drummers turned singers!');
-        $mix->setGenre('pop');
+        $mix->setGenre($genres[array_rand($genres)]);
+        //$mix->setGenre('pop');
         $mix->setTrackCount(rand(5, 20));
         $mix->setVotes(rand(-50, 50));
 
