@@ -46,7 +46,7 @@ class MixController extends AbstractController
     }
 
     #[Route('/mix/{id}/vote', name: 'app_mix_vote', methods: ['POST'])]
-    public function vote(VinylMix $mix, Request $request): Response
+    public function vote(VinylMix $mix, Request $request, EntityManagerInterface $entityManager): Response
     {
         $direction = $request->request->get('direction', 'up');
         if ($direction === 'up') {
@@ -54,13 +54,12 @@ class MixController extends AbstractController
         } else {
             $mix->setVotes($mix->getVotes() - 1);
         }
-        dd($mix);
+        //dd($mix);
+        
+        $entityManager->flush();
 
-        //, EntityManagerInterface $entityManager
-        //$entityManager->flush();
-
-        //return $this->redirectToRoute('app_mix_show', [
-        //    'id' => $mix->getId(),
-        //]);
+        return $this->redirectToRoute('app_mix_show', [
+            'id' => $mix->getId(),
+        ]);
     }
 }
