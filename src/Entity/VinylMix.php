@@ -6,6 +6,7 @@ use App\Repository\VinylMixRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation\Slug;
 
 #[ORM\Entity(repositoryClass: VinylMixRepository::class)]
 class VinylMix
@@ -14,6 +15,7 @@ class VinylMix
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -34,6 +36,10 @@ class VinylMix
     #[ORM\Column]
     //private ?int $votes = null;
     private int $votes = 0;
+
+    #[ORM\Column(length: 100, unique: true)]
+    #[Slug(fields: ['title'])]
+    private ?string $slug = null;
 
     public function __construct(){
         $this->createdAt = new \DateTimeImmutable();
@@ -139,5 +145,17 @@ class VinylMix
     public function downVote(): void
     {
         $this->votes--;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
