@@ -23,17 +23,19 @@
 			<div class="row">
 				{% for mix in mixes %}
 					<div class="col col-md-4">
-						<div class="mixed-vinyl-container p-3 text-center">
-							<img src="{{ mix.getImageUrl(300) }}" alt="Mix album cover">
-							<p class="mt-2">
-								<strong>{{ mix.title }}</strong>
-							</p>
-							<span>{{ mix.trackCount }}Tracks</span>|<span>{{ mix.genre }}</span>
-							<p>
-								<span>{{ mix.votesString }}</span>
-							</p>
+						<a href="{{ path('app_mix_show', { id: mix.id }) }}" class="mixed-vinyl-container p-3 text-center">
+							<div class="mixed-vinyl-container p-3 text-center">
+								<img src="{{ mix.getImageUrl(300) }}" alt="Mix album cover">
+								<p class="mt-2">
+									<strong>{{ mix.title }}</strong>
+								</p>
+								<span>{{ mix.trackCount }}Tracks</span>|<span>{{ mix.genre }}</span>
+								<p>
+									<span>{{ mix.votesString }}</span>
+								</p>
 
-						</div>
+							</div>
+						</a>
 					</div>
 				{% endfor %}
 			</div>
