@@ -8,6 +8,7 @@ framework:
 
     #esi: true
     #fragments: true
+    annotations: false
 
 when@test:
     framework:
