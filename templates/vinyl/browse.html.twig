@@ -21,7 +21,7 @@
 		<div>
 			<h2 class="mt-5">Mixes</h2>
 			<div class="row">
-				{% for mix in mixes %}
+				{% for mix in pager %}
 					<div class="col col-md-4">
 						<a href="{{ path('app_mix_show', { slug: mix.slug }) }}" class="mixed-vinyl-container p-3 text-center">
 							<div class="mixed-vinyl-container p-3 text-center">
@@ -38,6 +38,7 @@
 						</a>
 					</div>
 				{% endfor %}
+				{{ pagerfanta(pager) }}
 			</div>
 		</div>
 	</div>

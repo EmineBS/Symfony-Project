@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\VinylMix;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+
 
 /**
  * @extends ServiceEntityRepository<VinylMix>
@@ -24,7 +26,7 @@ class VinylMixRepository extends ServiceEntityRepository
 //    /**
 //     * @return VinylMix[] Returns an array of VinylMix objects
 //     */
-    public function findAllOrderedByVotes(string $genre = null): array
+    public function findAllOrderedByVotes(string $genre = null): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('mix')
             //->andWhere('mix.exampleField = :val')
@@ -36,10 +38,7 @@ class VinylMixRepository extends ServiceEntityRepository
                     ->setParameter('genre', $genre);
             }
         
-        return $queryBuilder
-            ->getQuery()
-            ->getResult()
-        ;
+        return $queryBuilder;
 
     }
 
