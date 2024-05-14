@@ -20,26 +20,31 @@
 
 		<div>
 			<h2 class="mt-5">Mixes</h2>
-			<div class="row">
-				{% for mix in pager %}
-					<div class="col col-md-4">
-						<a href="{{ path('app_mix_show', { slug: mix.slug }) }}" class="mixed-vinyl-container p-3 text-center">
-							<div class="mixed-vinyl-container p-3 text-center">
-								<img src="{{ mix.getImageUrl(300) }}" alt="Mix album cover">
-								<p class="mt-2">
-									<strong>{{ mix.title }}</strong>
-								</p>
-								<span>{{ mix.trackCount }}Tracks</span>|<span>{{ mix.genre }}</span>
-								<p>
-									<span>{{ mix.votesString }}</span>
-								</p>
+			<turbo-frame id="mix-browse-list-{{ pager.currentPage }}">
+				<div class="row">
+					{% for mix in pager %}
+						<div class="col col-md-4">
+							<a href="{{ path('app_mix_show', { slug: mix.slug }) }}" class="mixed-vinyl-container p-3 text-center">
+								<div class="mixed-vinyl-container p-3 text-center">
+									<img src="{{ mix.getImageUrl(300) }}" alt="Mix album cover">
+									<p class="mt-2">
+										<strong>{{ mix.title }}</strong>
+									</p>
+									<span>{{ mix.trackCount }}Tracks</span>|<span>{{ mix.genre }}</span>
+									<p>
+										<span>{{ mix.votesString }}</span>
+									</p>
 
-							</div>
-						</a>
-					</div>
-				{% endfor %}
-				{{ pagerfanta(pager) }}
-			</div>
+								</div>
+							</a>
+						</div>
+					{% endfor %}
+					{{ pagerfanta(pager) }}
+					{% if pager.hasNextPage %}
+						<turbo-frame id="mix-browse-list-{{ pager.nextPage }}" src="{{ pagerfanta_page_url(pager, pager.nextPage) }}" loading="lazy"></turbo-frame>
+					{% endif %}
+				</div>
+			</turbo-frame>
 		</div>
 	</div>
 {% endblock %}
